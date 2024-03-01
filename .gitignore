@@ -6,3 +6,4 @@ test
 *.ppm
 mandel
 /mandel.dSYM
+._*
