@@ -1,0 +1,5 @@
+
+*.so
+/libppm.so.dSYM
+test
+/test.dSYM
