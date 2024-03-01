@@ -2,6 +2,14 @@
 Generate a mandelbrot figure in PPM image format
 ![mandelbrot figure](./doc/m.png)
 
+## Usage
+1. Compile: `make`
+2. Execute: 
+   
+   `./mandel`  OR  `./mandel <threshold>`
+   
+   You can specify the threshold or use the default value which is 2
+
 ## Dependancy graph
 ![dependacy graph](./doc/dependancygraph.png)
 
