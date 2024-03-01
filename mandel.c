@@ -8,44 +8,54 @@
 #define SIZEX 1500       // Image X dimension.
 #define SIZEY 1500       // Image Y dimension.
 
+/**
+ * @struct col
+ * @brief Structure representing a color in RGB format
+ */
 struct col
 {
     int r;
     int g;
     int b;
 };
- 
-struct col getcol( int val , int max )
+
+/**
+ * @brief Computes a color based on a value and a maximum value.
+ * @param val The value to map to a color.
+ * @param max The maximum value for normalization.
+ * @return A struct col representing the color.
+ */
+struct col getcol(int val, int max)
 {
-    double q = (double)val/(double)max;
- 
-    struct col c = { 0, 0, 0 };
- 
-    if( q < 0.25 )
+    double q = (double)val / (double)max;  // Normalizes the value
+
+    struct col c = {0, 0, 0};
+
+    // Maps the normalized value to a color range
+    if (q < 0.25)
     {
-            c.r = ( q * 4.0 ) * 255.0;
-            c.b = 255;
-        }
-    else if( q < 0.5 )
+        c.r = (q * 4.0) * 255.0;
+        c.b = 255;
+    }
+    else if (q < 0.5)
     {
-            c.b = 255;
-            c.g = 255;
-            c.r = (q-0.25)*4.0*255.0;
- 
-        }
-    else if( q < 0.75 )
+        c.b = 255;
+        c.g = 255;
+        c.r = (q - 0.25) * 4.0 * 255.0;
+    }
+    else if (q < 0.75)
     {
-            c.b = 255;
-            c.r = 255;
-            c.g = 255.0 - (q-0.5)*4.0*255.0;
-        }
+        c.b = 255;
+        c.r = 255;
+        c.g = 255.0 - (q - 0.5) * 4.0 * 255.0;
+    }
     else
     {
-            c.b = 255-(q-0.75)*4.0*255.0;
-            c.g = 0;
-            c.r = 255;
-        }
- 
+        c.b = 255 - (q - 0.75) * 4.0 * 255.0;
+        c.g = 0;
+        c.r = 255;
+    }
+
     return c;
 }
 
