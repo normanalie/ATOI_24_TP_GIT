@@ -3,3 +3,4 @@
 /libppm.so.dSYM
 test
 /test.dSYM
+*.ppm
