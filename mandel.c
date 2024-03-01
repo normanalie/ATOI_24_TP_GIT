@@ -8,6 +8,47 @@
 #define SIZEX 1500       // Image X dimension.
 #define SIZEY 1500       // Image Y dimension.
 
+struct col
+{
+    int r;
+    int g;
+    int b;
+};
+ 
+struct col getcol( int val , int max )
+{
+    double q = (double)val/(double)max;
+ 
+    struct col c = { 0, 0, 0 };
+ 
+    if( q < 0.25 )
+    {
+            c.r = ( q * 4.0 ) * 255.0;
+            c.b = 255;
+        }
+    else if( q < 0.5 )
+    {
+            c.b = 255;
+            c.g = 255;
+            c.r = (q-0.25)*4.0*255.0;
+ 
+        }
+    else if( q < 0.75 )
+    {
+            c.b = 255;
+            c.r = 255;
+            c.g = 255.0 - (q-0.5)*4.0*255.0;
+        }
+    else
+    {
+            c.b = 255-(q-0.75)*4.0*255.0;
+            c.g = 0;
+            c.r = 255;
+        }
+ 
+    return c;
+}
+
 /**
  * @brief Computes the real part corresponding to the x coordinate on the Mandelbrot scale.
  * @param x The x coordinate.
@@ -28,43 +69,42 @@ double cy(int y) {
     return -1.0 + y * qy;
 }
 
-
 int main(int argc, char *argv[]) {
-    struct ppm_image im;
-    ppm_image_init(&im, SIZEX, SIZEY);
+  struct ppm_image im;
+  ppm_image_init(&im, SIZEX, SIZEY);
 
-    int i, j;
-    double colref = 255.0 / log(ITER);    // Computes a color reference based on the maximum number of iterations.
+  int i, j;
+  int colref = log(ITER);
 
-    // Iterates over all pixels of the image.
-    for (i = 0; i < SIZEX; ++i) {
+for (i = 0; i < SIZEX; ++i) {
         for (j = 0; j < SIZEY; ++j) {
-
+ 
             unsigned long int iter = 0;
-
-            double complex c = cx(i) + cy(j) * I;    // Computes the complex number corresponding to the pixel coordinates.
+ 
+            double complex c =  cx(i) + cy(j) * I;
             double complex z = 0;
-
-            // Iteration loop to determine the point's membership to the Mandelbrot set.
-            while (iter < ITER) {
+ 
+            while(iter < ITER)
+            {
                 double mod = cabs(z);
-
-                if (TRSH < mod) {
+ 
+                if( TRSH < mod )
+                {
                     break;
                 }
-
-                z = z * z + c;
-
+ 
+                z = z*z + c;
+ 
                 iter++;
             }
-
-            int grey = colref * log(iter);    // Computes a grayscale value based on the number of iterations.
-            ppm_image_setpixel(&im, i, j, grey, grey, grey);
+ 
+            struct col cc = getcol( log(iter), colref );
+            ppm_image_setpixel(&im, i,j, cc.r, cc.g , cc.b );
         }
     }
 
-    ppm_image_dump(&im, "m.ppm");    // Saves the generated PPM image to a file.
-    ppm_image_release(&im);
+  ppm_image_dump(&im, "m.ppm");
+  ppm_image_release(&im);
 
-    return 0;
+  return 0;
 }
