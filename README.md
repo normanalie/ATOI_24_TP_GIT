@@ -25,6 +25,6 @@ The Mandelbrot set is a collection of points in the complex plane. Each point re
 
 ## 4. How this repo is made
 1. This repo use GIT and is hosted on GitHub
-2. This repo is a foork of https://github.com/besnardjb/ATOI_24_TP_GIT.git
+2. This repo is a fork of https://github.com/besnardjb/ATOI_24_TP_GIT.git
 
 
